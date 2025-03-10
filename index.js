@@ -1,4 +1,3 @@
-2500 550+el peso
 const express = require("express");
 const axios = require("axios");
 const app = express();

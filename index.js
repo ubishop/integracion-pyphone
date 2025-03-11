@@ -6,8 +6,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const API_KEY = "TU_API_KEY_AQUI"; // 🔹 Reemplaza con tu API Key de PayPhone
-const SECRET_KEY = "TU_SECRET_KEY_AQUI"; // 🔹 Reemplaza con tu Secret Key de PayPhone
+const API_KEY = "SgnTp2kD06dbUJdwQFd0A"; // 🔹 Reemplaza con tu API Key de PayPhone
+const SECRET_KEY = "xVf3ogkgUkW5w8OKQ6sGQ"; // 🔹 Reemplaza con tu Secret Key de PayPhone
 
 // Endpoint para generar un pago en PayPhone
 app.post("/pagar", async (req, res) => {

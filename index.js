@@ -39,12 +39,7 @@ app.post("/pagar", async (req, res) => {
       res.status(400).json({ error: "No se pudo generar el pago" });
     }
   } catch (error) {
-    console.error("Error generando el pago:", error.response?.data || error.message);
-    res.status(500).json({ error: "Error en el servidor" });
+    console.error("Error generando el pago:", error.response?.data || error.message || error);
+    res.status(500).json({ error: "Error en el servidor", details: error.response?.data || error.message });
   }
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

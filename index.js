@@ -1,50 +1,50 @@
-
 const express = require("express");
+const cors = require("cors");
 const axios = require("axios");
+
 const app = express();
 app.use(express.json());
+app.use(cors());
 
-const API_KEY = "SgnTp2kD06dbUJdwQFd0A";  // Reemplaza con tu API Key de PayPhone
-const SECRET_KEY = "xVf3ogkgUkW5w8OKQ6sGQ";  // Reemplaza con tu Secret Key de PayPhone
+const API_KEY = "TU_API_KEY_AQUI"; // 🔹 Reemplaza con tu API Key de PayPhone
+const SECRET_KEY = "TU_SECRET_KEY_AQUI"; // 🔹 Reemplaza con tu Secret Key de PayPhone
 
+// Endpoint para generar un pago en PayPhone
+app.post("/pagar", async (req, res) => {
+  try {
+    const { amount, currency, phone, order_id, return_url } = req.body;
 
-const port = process.env.PORT || 3000;
+    const response = await axios.post(
+      "https://pay.payphonetodoesposible.com/api/button/Prepare",
+      {
+        amount: amount * 100, // 🔹 PayPhone trabaja con valores en centavos
+        currency: currency,
+        phoneNumber: phone || "",
+        email: "cliente@correo.com",
+        reference: order_id,
+        responseUrl: return_url,
+        cancellationUrl: return_url,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${API_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-// Ruta principal
-app.get('/', (req, res) => {
-    res.send('API funcionando correctamente 🚀');
-});
-
-// Iniciar el servidor
-app.listen(port, () => {
-    console.log(`Servidor corriendo en el puerto ${port}`);
-});
-
-
-app.post("/crear-pago", async (req, res) => {
-    try {
-        const { monto, telefono } = req.body;
-
-        const response = await axios.post("https://pay.payphonetodoesposible.com/api/button/Prepare", {
-            amount: monto * 100,
-            currency: "USD",
-            phoneNumber: telefono,
-            email: "cliente@ejemplo.com",
-            responseUrl: "https://tutienda.com/pago-exitoso",
-            cancellationUrl: "https://tutienda.com/pago-cancelado",
-        }, {
-            headers: {
-                Authorization: `Bearer ${API_KEY}`,
-                "Content-Type": "application/json"
-            }
-        });
-
-        res.json({ url: response.data.payWithPayPhone });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    if (response.data && response.data.payWithCard) {
+      res.json({ payment_url: response.data.payWithCard });
+    } else {
+      res.status(400).json({ error: "No se pudo generar el pago" });
     }
+  } catch (error) {
+    console.error("Error generando el pago:", error.response?.data || error.message);
+    res.status(500).json({ error: "Error en el servidor" });
+  }
 });
 
-app.listen(3000, () => {
-    console.log("Servidor corriendo en el puerto 3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

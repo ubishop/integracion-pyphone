@@ -1,3 +1,4 @@
+
 const express = require("express");
 const axios = require("axios");
 const app = express();
@@ -5,6 +6,22 @@ app.use(express.json());
 
 const API_KEY = "TU_API_KEY";  // Reemplaza con tu API Key de PayPhone
 const SECRET_KEY = "TU_SECRET_KEY";  // Reemplaza con tu Secret Key de PayPhone
+
+const express = require('express');
+const app = express();
+
+const port = process.env.PORT || 3000;
+
+// Ruta principal
+app.get('/', (req, res) => {
+    res.send('API funcionando correctamente 🚀');
+});
+
+// Iniciar el servidor
+app.listen(port, () => {
+    console.log(`Servidor corriendo en el puerto ${port}`);
+});
+
 
 app.post("/crear-pago", async (req, res) => {
     try {

@@ -20,7 +20,7 @@ app.post("/pagar", async (req, res) => {
         amount: amount * 100, // 🔹 PayPhone trabaja con valores en centavos
         currency: currency,
         phoneNumber: phone || "",
-        email: "cliente@correo.com",
+        email: "cliente@correo.com", // Reemplaza con el correo del cliente si es necesario
         reference: order_id,
         responseUrl: return_url,
         cancellationUrl: return_url,

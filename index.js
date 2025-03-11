@@ -4,11 +4,9 @@ const axios = require("axios");
 const app = express();
 app.use(express.json());
 
-const API_KEY = "TU_API_KEY";  // Reemplaza con tu API Key de PayPhone
-const SECRET_KEY = "TU_SECRET_KEY";  // Reemplaza con tu Secret Key de PayPhone
+const API_KEY = "SgnTp2kD06dbUJdwQFd0A";  // Reemplaza con tu API Key de PayPhone
+const SECRET_KEY = "xVf3ogkgUkW5w8OKQ6sGQ";  // Reemplaza con tu Secret Key de PayPhone
 
-const express = require('express');
-const app = express();
 
 const port = process.env.PORT || 3000;
 
